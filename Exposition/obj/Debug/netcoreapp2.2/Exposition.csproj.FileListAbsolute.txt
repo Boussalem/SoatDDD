@@ -1,0 +1,14 @@
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\bin\Debug\netcoreapp2.2\Exposition.deps.json
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\bin\Debug\netcoreapp2.2\Exposition.runtimeconfig.json
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\bin\Debug\netcoreapp2.2\Exposition.runtimeconfig.dev.json
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\bin\Debug\netcoreapp2.2\Exposition.dll
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\bin\Debug\netcoreapp2.2\Exposition.pdb
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\obj\Debug\netcoreapp2.2\Exposition.csproj.CoreCompileInputs.cache
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\obj\Debug\netcoreapp2.2\Exposition.RazorAssemblyInfo.cache
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\obj\Debug\netcoreapp2.2\Exposition.RazorAssemblyInfo.cs
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\obj\Debug\netcoreapp2.2\Exposition.AssemblyInfoInputs.cache
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\obj\Debug\netcoreapp2.2\Exposition.AssemblyInfo.cs
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\obj\Debug\netcoreapp2.2\Exposition.RazorTargetAssemblyInfo.cache
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\obj\Debug\netcoreapp2.2\Exposition.dll
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\obj\Debug\netcoreapp2.2\Exposition.pdb
+c:\users\dboussalem\source\repos\SoatDDD\Exposition\obj\Debug\netcoreapp2.2\Exposition.csprojAssemblyReference.cache

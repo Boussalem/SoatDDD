@@ -1,0 +1,9 @@
+c:\users\dboussalem\source\repos\SoatDDD\use_case\bin\Debug\netcoreapp2.1\use_case.deps.json
+c:\users\dboussalem\source\repos\SoatDDD\use_case\bin\Debug\netcoreapp2.1\use_case.dll
+c:\users\dboussalem\source\repos\SoatDDD\use_case\bin\Debug\netcoreapp2.1\use_case.pdb
+c:\users\dboussalem\source\repos\SoatDDD\use_case\obj\Debug\netcoreapp2.1\use_case.csprojAssemblyReference.cache
+c:\users\dboussalem\source\repos\SoatDDD\use_case\obj\Debug\netcoreapp2.1\use_case.csproj.CoreCompileInputs.cache
+c:\users\dboussalem\source\repos\SoatDDD\use_case\obj\Debug\netcoreapp2.1\use_case.AssemblyInfoInputs.cache
+c:\users\dboussalem\source\repos\SoatDDD\use_case\obj\Debug\netcoreapp2.1\use_case.AssemblyInfo.cs
+c:\users\dboussalem\source\repos\SoatDDD\use_case\obj\Debug\netcoreapp2.1\use_case.dll
+c:\users\dboussalem\source\repos\SoatDDD\use_case\obj\Debug\netcoreapp2.1\use_case.pdb

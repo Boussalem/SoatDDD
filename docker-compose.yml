@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  exposition:
+    image: ${DOCKER_REGISTRY}exposition
+    build:
+      context: .
+      dockerfile: Exposition\Dockerfile

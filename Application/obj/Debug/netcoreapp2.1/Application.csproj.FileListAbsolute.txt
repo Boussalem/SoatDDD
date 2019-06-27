@@ -1,0 +1,11 @@
+c:\users\dboussalem\source\repos\SoatDDD\Application\bin\Debug\netcoreapp2.1\Application.deps.json
+c:\users\dboussalem\source\repos\SoatDDD\Application\bin\Debug\netcoreapp2.1\Application.runtimeconfig.json
+c:\users\dboussalem\source\repos\SoatDDD\Application\bin\Debug\netcoreapp2.1\Application.runtimeconfig.dev.json
+c:\users\dboussalem\source\repos\SoatDDD\Application\bin\Debug\netcoreapp2.1\Application.dll
+c:\users\dboussalem\source\repos\SoatDDD\Application\bin\Debug\netcoreapp2.1\Application.pdb
+c:\users\dboussalem\source\repos\SoatDDD\Application\obj\Debug\netcoreapp2.1\Application.csproj.CoreCompileInputs.cache
+c:\users\dboussalem\source\repos\SoatDDD\Application\obj\Debug\netcoreapp2.1\Application.AssemblyInfoInputs.cache
+c:\users\dboussalem\source\repos\SoatDDD\Application\obj\Debug\netcoreapp2.1\Application.AssemblyInfo.cs
+c:\users\dboussalem\source\repos\SoatDDD\Application\obj\Debug\netcoreapp2.1\Application.dll
+c:\users\dboussalem\source\repos\SoatDDD\Application\obj\Debug\netcoreapp2.1\Application.pdb
+c:\users\dboussalem\source\repos\SoatDDD\Application\obj\Debug\netcoreapp2.1\Application.csprojAssemblyReference.cache
