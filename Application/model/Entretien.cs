@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Application.use_case.entretien;
 
 namespace Application.model
 {
@@ -11,5 +10,6 @@ namespace Application.model
         public string  Status { get; set; }
 
         public ConsultantRecruteur ConsultantRecruteur { get; set; }
+        public Salle Salle { get; set; }
     }
 }

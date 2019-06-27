@@ -16,6 +16,7 @@ namespace Application.Test
         {
             //ARRANGE 
             Mock<IConsultantRecrueteurRepository> mockConsultantRecrueteurRepository = new Mock<IConsultantRecrueteurRepository>();
+            var salleRepository = new Mock<ISalleRepository>();
             List<ConsultantRecruteur> consultantRecruteursAttendus = new List<ConsultantRecruteur>
             {
                 new ConsultantRecruteur
@@ -31,6 +32,17 @@ namespace Application.Test
             };
 
             mockConsultantRecrueteurRepository.Setup(x => x.GetAvailableConsultantRecruteurForDate(DateTime.Today)).Returns(consultantRecruteursAttendus);
+
+            var salles = new []
+            {
+                new Salle
+                {
+                    Name = "salle",
+                }, 
+            };
+            
+            salleRepository.Setup(r => r.Get(It.IsAny<DateTimeOffset>()))
+                .Returns(salles);
             Candidat candidat = new Candidat
             {
                 Name = "Max",
@@ -40,7 +52,7 @@ namespace Application.Test
 
 
             //ACT 
-            PlanifierEntretien planifierEntretien = new PlanifierEntretien(mockConsultantRecrueteurRepository.Object);
+            PlanifierEntretien planifierEntretien = new PlanifierEntretien(mockConsultantRecrueteurRepository.Object, salleRepository.Object);
             Entretien entretien = planifierEntretien.PlanifierUnEntretien(DateTime.Today, candidat);
 
             
@@ -51,6 +63,7 @@ namespace Application.Test
             Assert.Equal(entretien.Status, "Valid");
             Assert.Equal(entretien.ConsultantRecruteur.Name, "Remi");
             Assert.Equal(entretien.ConsultantRecruteur.AnneExperience, 7);
+            Assert.Equal("salle", entretien.Salle.Name);
         }
     }
 }

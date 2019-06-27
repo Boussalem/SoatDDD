@@ -1,33 +1,33 @@
 ﻿using Application.infrastructure;
 using Application.model;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace Application.use_case.entretien
 {
     public class PlanifierEntretien
     {
-        public IConsultantRecrueteurRepository consultantRecrueteurRepository;
-        
+        private readonly IConsultantRecrueteurRepository _consultantRecruteurRepository;
+        private readonly ISalleRepository _salleRepository;
 
-        public  PlanifierEntretien(IConsultantRecrueteurRepository consultantRecrueteurRepository)
+        public  PlanifierEntretien(IConsultantRecrueteurRepository consultantRecruteurRepository, ISalleRepository salleRepository)
         {
-            this.consultantRecrueteurRepository = consultantRecrueteurRepository;
+            _consultantRecruteurRepository = consultantRecruteurRepository;
+            _salleRepository = salleRepository;
         }
 
-        public Entretien PlanifierUnEntretien(DateTime date , Candidat candidat)
+        public Entretien PlanifierUnEntretien(DateTime date, Candidat candidat)
         {
-            ConsultantRecruteur consultantRecruteurdispo = consultantRecrueteurRepository.GetAvailableConsultantRecruteurForDate(DateTime.Today).
+            ConsultantRecruteur consultantRecruteurdispo = _consultantRecruteurRepository.GetAvailableConsultantRecruteurForDate(DateTime.Today).
                 OrderByDescending(x => x.AnneExperience).FirstOrDefault(x => x.AnneExperience > candidat.AnneExperience);
+            var salle = _salleRepository.Get(date).FirstOrDefault();
             return new Entretien
             {
                 DateEntretien = DateTime.Today,
-                Status = consultantRecruteurdispo == null? "Invalid" : "Valid",
-                ConsultantRecruteur = consultantRecruteurdispo
+                Status = consultantRecruteurdispo == null && salle != null ? "Invalid" : "Valid",
+                ConsultantRecruteur = consultantRecruteurdispo,
+                Salle = salle,
             };
         }
-        
     }
 }
