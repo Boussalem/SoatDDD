@@ -2,7 +2,7 @@
 {
     public class ConsultantRecruteur : Entity
     {
-        public string Name {get; set;}
+        public string Name { get; set;}
         public Profile Profile { get; set; }
 
         public bool CanInterview(Profile profile) => Profile.Experience > profile.Experience;

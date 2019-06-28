@@ -16,15 +16,18 @@ namespace Application.use_case.entretien
             _salleRepository = salleRepository;
         }
 
-        public Entretien PlanifierUnEntretien(DateTime date, Candidat candidat)
+        public Entretien PlanifierUnEntretien(DateTimeOffset date, Candidat candidat)
         {
-            ConsultantRecruteur consultantRecruteurdispo = _consultantRecruteurRepository.GetAvailableConsultantRecruteurForDate(DateTime.Today).
-                OrderByDescending(x => x.AnneExperience).FirstOrDefault(x => x.AnneExperience > candidat.AnneExperience);
+            var consultantRecruteurdispo = _consultantRecruteurRepository.GetAvailableConsultantRecruteurForDate(DateTime.Today)
+                .OrderByDescending(cr => cr.Profile.Experience)
+                .FirstOrDefault(cr => cr.CanInterview(candidat.Profile));
             var salle = _salleRepository.Get(date).FirstOrDefault();
+
+            //todo error handling
             return new Entretien
             {
-                DateEntretien = DateTime.Today,
-                Status = consultantRecruteurdispo == null && salle != null ? "Invalid" : "Valid",
+                Creneau = new Creneau(date, TimeSpan.FromHours(1)),
+                Status = EntretienStatus.Scheduled,
                 ConsultantRecruteur = consultantRecruteurdispo,
                 Salle = salle,
             };

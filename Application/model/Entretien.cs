@@ -1,4 +1,7 @@
-﻿namespace Application.model
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Application.model
 {
     public class Entretien
     {
@@ -7,6 +10,17 @@
         public Candidat Candidat { get; set; }
         public ConsultantRecruteur ConsultantRecruteur { get; set; }
         public Salle Salle { get; set; }
+
+        public ConsultantRecruteur Match(IEnumerable<ConsultantRecruteur> salles, Creneau creneau)
+        {
+            return salles.FirstOrDefault(consultantRecruteur => consultantRecruteur.IsAvailableAt(creneau)
+                                         && consultantRecruteur.CanInterview(Candidat.Profile));
+        }
+
+        public Salle Match(IEnumerable<Salle> salles, Creneau creneau)
+        {
+            return salles.FirstOrDefault(salle => salle.IsAvailableAt(creneau));
+        }
     }
 
     public enum EntretienStatus

@@ -1,6 +1,6 @@
 ﻿namespace Application.model
 {
-    public class Salle
+    public class Salle : Entity
     {
         public string Name { get; set; }
 
