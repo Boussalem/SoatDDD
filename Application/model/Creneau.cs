@@ -14,5 +14,13 @@ namespace Application.model
 
         public DateTimeOffset StartDate { get; }
         public DateTimeOffset EndDate { get; }
+
+        public override bool Equals(object obj)
+        {
+            var creneau = obj as Creneau;
+            return creneau != null &&
+                   StartDate.Equals(creneau.StartDate) &&
+                   EndDate.Equals(creneau.EndDate);
+        }
     }
 }
