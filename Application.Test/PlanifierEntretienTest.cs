@@ -1,6 +1,5 @@
 using Application.model;
 using System;
-using System.Collections.Generic;
 using Application.Dtos;
 using Xunit;
 using Application.infrastructure;
@@ -13,12 +12,12 @@ namespace Application.Test
     public class PlanifierEntretienTest
     {
         [Fact]
-        public void ShouldGiveMeAllAvailableConsultantRecrueteurForDate()
+        public void ShouldGiveMeAllAvailableConsultantRecruteurForDate()
         {
             var now = DateTimeOffset.UtcNow;
 
             //ARRANGE 
-            Mock<IConsultantRecruteurRepository> consultantRecruteurRepository = new Mock<IConsultantRecruteurRepository>();
+            var consultantRecruteurRepository = new Mock<IConsultantRecruteurRepository>();
             var salleRepository = new Mock<ISalleRepository>();
             var consultantRecruteurs = new []
             {
