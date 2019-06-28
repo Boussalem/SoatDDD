@@ -18,9 +18,11 @@ namespace Application.model
         public override bool Equals(object obj)
         {
             var creneau = obj as Creneau;
-            return creneau != null &&
-                   StartDate.Equals(creneau.StartDate) &&
-                   EndDate.Equals(creneau.EndDate);
+            return creneau != null  &&
+                   StartDate.TimeOfDay.Minutes.Equals(creneau.StartDate.TimeOfDay.Minutes) &&
+                   EndDate.TimeOfDay.Minutes.Equals(creneau.EndDate.TimeOfDay.Minutes)
+                   && StartDate.Day.Equals(creneau.StartDate.Day) &&
+                   EndDate.Day.Equals(creneau.EndDate.Day);
         }
     }
 }
