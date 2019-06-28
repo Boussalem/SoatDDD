@@ -1,16 +1,15 @@
 ﻿using Application.infrastructure;
 using Application.model;
 using System;
-using System.Linq;
 
 namespace Application.use_case.entretien
 {
     public class PlanifierEntretien
     {
-        private readonly IConsultantRecrueteurRepository _consultantRecruteurRepository;
+        private readonly IConsultantRecruteurRepository _consultantRecruteurRepository;
         private readonly ISalleRepository _salleRepository;
 
-        public  PlanifierEntretien(IConsultantRecrueteurRepository consultantRecruteurRepository, ISalleRepository salleRepository)
+        public  PlanifierEntretien(IConsultantRecruteurRepository consultantRecruteurRepository, ISalleRepository salleRepository)
         {
             _consultantRecruteurRepository = consultantRecruteurRepository;
             _salleRepository = salleRepository;
@@ -18,19 +17,15 @@ namespace Application.use_case.entretien
 
         public Entretien PlanifierUnEntretien(DateTimeOffset date, Candidat candidat)
         {
-            var consultantRecruteurdispo = _consultantRecruteurRepository.GetAvailableConsultantRecruteurForDate(DateTime.Today)
-                .OrderByDescending(cr => cr.Profile.Experience)
-                .FirstOrDefault(cr => cr.CanInterview(candidat.Profile));
-            var salle = _salleRepository.Get(date).FirstOrDefault();
-
-            //todo error handling
-            return new Entretien
+            var availableConsultantRecruteur = _consultantRecruteurRepository.GetAvailableConsultantRecruteurForDate(date);
+            var availableSalles = _salleRepository.Get(date);
+            var entretien = new Entretien
             {
+                Candidat = candidat,
                 Creneau = new Creneau(date, TimeSpan.FromHours(1)),
-                Status = EntretienStatus.Scheduled,
-                ConsultantRecruteur = consultantRecruteurdispo,
-                Salle = salle,
-            };
+            }.Schedule(availableConsultantRecruteur, availableSalles);
+            
+            return entretien;
         }
     }
 }

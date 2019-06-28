@@ -14,7 +14,7 @@ namespace Application.Test
         public void ShouldGiveMeAllAvailableConsultantRecrueteurForDate()
         {
             //ARRANGE 
-            Mock<IConsultantRecrueteurRepository> mockConsultantRecrueteurRepository = new Mock<IConsultantRecrueteurRepository>();
+            Mock<IConsultantRecruteurRepository> mockConsultantRecrueteurRepository = new Mock<IConsultantRecruteurRepository>();
             var salleRepository = new Mock<ISalleRepository>();
             List<ConsultantRecruteur> consultantRecruteursAttendus = new List<ConsultantRecruteur>
             {
