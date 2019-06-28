@@ -1,6 +1,7 @@
 ﻿using Application.infrastructure;
 using Application.model;
 using System;
+using Application.Dtos;
 
 namespace Application.use_case.entretien
 {
@@ -15,17 +16,21 @@ namespace Application.use_case.entretien
             _salleRepository = salleRepository;
         }
 
-        public Entretien PlanifierUnEntretien(DateTimeOffset date, Candidat candidat)
+        public EntretienDto PlanifierUnEntretien(DateTimeOffset date, Candidat candidat)
         {
             var availableConsultantRecruteur = _consultantRecruteurRepository.GetAvailableConsultantRecruteurForDate(date);
-            var availableSalles = _salleRepository.Get(date);
+            var salles = _salleRepository.Get(date);
             var entretien = new Entretien
             {
                 Candidat = candidat,
                 Creneau = new Creneau(date, TimeSpan.FromHours(1)),
-            }.Schedule(availableConsultantRecruteur, availableSalles);
+            }.Schedule(availableConsultantRecruteur);
             
-            return entretien;
+            return new EntretienDto
+            {
+                Salle = new SalleAggregate().Match(salles, entretien.Creneau),
+                Entretien = entretien,
+            };
         }
     }
 }

@@ -9,13 +9,11 @@ namespace Application.model
         public EntretienStatus Status { get; set; }
         public Candidat Candidat { get; set; }
         public ConsultantRecruteur ConsultantRecruteur { get; set; }
-        public Salle Salle { get; set; }
 
-        public Entretien Schedule(IEnumerable<ConsultantRecruteur> availableRecruteurs, IEnumerable<Salle> availableSalles)
+        public Entretien Schedule(IEnumerable<ConsultantRecruteur> availableRecruteurs)
         {
             ConsultantRecruteur = Match(availableRecruteurs);
-            Salle = Match(availableSalles);
-            Status = ConsultantRecruteur != null && Salle != null ? EntretienStatus.Scheduled : EntretienStatus.NoScheduleAvailable;
+            Status = ConsultantRecruteur != null ? EntretienStatus.Scheduled : EntretienStatus.NoScheduleAvailable;
 
             return this;
         }
@@ -24,11 +22,6 @@ namespace Application.model
         {
             return consultantRecruteurs.FirstOrDefault(consultantRecruteur => consultantRecruteur.IsAvailableAt(Creneau)
                                          && consultantRecruteur.CanInterview(Candidat.Profile));
-        }
-
-        private Salle Match(IEnumerable<Salle> salles)
-        {
-            return salles.FirstOrDefault(salle => salle.IsAvailableAt(Creneau));
         }
     }
 

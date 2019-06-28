@@ -13,6 +13,8 @@ namespace Application.Test
         [Fact]
         public void ShouldGiveMeAllAvailableConsultantRecrueteurForDate()
         {
+            var now = DateTimeOffset.UtcNow;
+
             //ARRANGE 
             Mock<IConsultantRecruteurRepository> mockConsultantRecrueteurRepository = new Mock<IConsultantRecruteurRepository>();
             var salleRepository = new Mock<ISalleRepository>();
@@ -42,7 +44,7 @@ namespace Application.Test
             
             salleRepository.Setup(r => r.Get(It.IsAny<DateTimeOffset>()))
                 .Returns(salles);
-            Candidat candidat = new Candidat
+            var candidat = new Candidat
             {
                 Name = "Max",
                 Profile = new Profile(2),
@@ -50,14 +52,13 @@ namespace Application.Test
 
             //ACT 
             var planifierEntretien = new PlanifierEntretien(mockConsultantRecrueteurRepository.Object, salleRepository.Object);
-            var entretien = planifierEntretien.PlanifierUnEntretien(DateTimeOffset.Now, candidat);
-            var Creneau = new Creneau(DateTimeOffset.Now, TimeSpan.FromHours(1));
+            var entretienDto = planifierEntretien.PlanifierUnEntretien(DateTimeOffset.Now, candidat);
+            var creneau = new Creneau(DateTimeOffset.Now, TimeSpan.FromHours(1));
          
             
             //ASSERT
-            //Assert.True(!firstNotSecond.Any() && !secondNotfirst.Any());
-            Assert.IsType<Entretien>(entretien);
-            Assert.Equal(Creneau, entretien.Creneau);
+
+            Assert.Equal(creneau, entretien.Creneau);
             Assert.Equal(EntretienStatus.Scheduled, entretien.Status);
             Assert.Equal("Remi", entretien.ConsultantRecruteur.Name);
             Assert.Equal(7, entretien.ConsultantRecruteur.Profile.Experience);
