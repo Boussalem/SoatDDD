@@ -16,7 +16,7 @@ namespace Application.Test
             var now = DateTimeOffset.UtcNow;
 
             //ARRANGE 
-            Mock<IConsultantRecruteurRepository> mockConsultantRecrueteurRepository = new Mock<IConsultantRecruteurRepository>();
+            Mock<IConsultantRecruteurRepository> consultantRecruteurRepository = new Mock<IConsultantRecruteurRepository>();
             var salleRepository = new Mock<ISalleRepository>();
             List<ConsultantRecruteur> consultantRecruteursAttendus = new List<ConsultantRecruteur>
             {
@@ -32,7 +32,8 @@ namespace Application.Test
                 }
             };
 
-            mockConsultantRecrueteurRepository.Setup(x => x.GetAvailableConsultantRecruteurForDate(DateTime.Today)).Returns(consultantRecruteursAttendus);
+            consultantRecruteurRepository.Setup(x => x.GetAvailableConsultantRecruteurForDate(It.IsAny<DateTimeOffset>()))
+                .Returns(consultantRecruteursAttendus);
 
             var salles = new []
             {
@@ -51,18 +52,18 @@ namespace Application.Test
             };
 
             //ACT 
-            var planifierEntretien = new PlanifierEntretien(mockConsultantRecrueteurRepository.Object, salleRepository.Object);
+            var planifierEntretien = new PlanifierEntretien(consultantRecruteurRepository.Object, salleRepository.Object);
             var entretienDto = planifierEntretien.PlanifierUnEntretien(DateTimeOffset.Now, candidat);
-            var creneau = new Creneau(DateTimeOffset.Now, TimeSpan.FromHours(1));
+            var creneau = new Creneau(now, TimeSpan.FromHours(1));
          
             
             //ASSERT
 
-            Assert.Equal(creneau, entretien.Creneau);
-            Assert.Equal(EntretienStatus.Scheduled, entretien.Status);
-            Assert.Equal("Remi", entretien.ConsultantRecruteur.Name);
-            Assert.Equal(7, entretien.ConsultantRecruteur.Profile.Experience);
-            Assert.Equal("salle", entretien.Salle.Name);
+            Assert.Equal(creneau, entretienDto.Entretien.Creneau);
+            Assert.Equal(EntretienStatus.Scheduled, entretienDto.Entretien.Status);
+            Assert.Equal("Remi", entretienDto.Entretien.ConsultantRecruteur.Name);
+            Assert.Equal(7, entretienDto.Entretien.ConsultantRecruteur.Profile.Experience);
+            Assert.Equal("salle", entretienDto.Salle.Salle.Name);
         }
     }
 }
