@@ -2,7 +2,6 @@ using Application.model;
 using System;
 using System.Collections.Generic;
 using Xunit;
-using System.Linq;
 using Application.infrastructure;
 using Moq;
 using Application.use_case.entretien;
@@ -22,12 +21,12 @@ namespace Application.Test
                 new ConsultantRecruteur
                 {
                     Name = "Alain",
-                    AnneExperience = 2
+                    Profile = new Profile(2),
                 },
                 new ConsultantRecruteur
                 {
                     Name = "Remi",
-                    AnneExperience = 7
+                    Profile = new Profile(7),
                 }
             };
 
@@ -46,23 +45,21 @@ namespace Application.Test
             Candidat candidat = new Candidat
             {
                 Name = "Max",
-                AnneExperience = 2
+                Profile = new Profile(2),
             };
 
-
-
             //ACT 
-            PlanifierEntretien planifierEntretien = new PlanifierEntretien(mockConsultantRecrueteurRepository.Object, salleRepository.Object);
-            Entretien entretien = planifierEntretien.PlanifierUnEntretien(DateTime.Today, candidat);
+            var planifierEntretien = new PlanifierEntretien(mockConsultantRecrueteurRepository.Object, salleRepository.Object);
+            var entretien = planifierEntretien.PlanifierUnEntretien(DateTime.Today, candidat);
 
             
             //ASSERT
             //Assert.True(!firstNotSecond.Any() && !secondNotfirst.Any());
             Assert.IsType<Entretien>(entretien);
-            Assert.Equal(entretien.DateEntretien, DateTime.Today);
-            Assert.Equal(entretien.Status, "Valid");
-            Assert.Equal(entretien.ConsultantRecruteur.Name, "Remi");
-            Assert.Equal(entretien.ConsultantRecruteur.AnneExperience, 7);
+            Assert.Equal(DateTime.Today, entretien.Creneau.StartDate);
+            Assert.Equal(EntretienStatus.Scheduled, entretien.Status);
+            Assert.Equal("Remi", entretien.ConsultantRecruteur.Name);
+            Assert.Equal(7, entretien.ConsultantRecruteur.Profile.Experience);
             Assert.Equal("salle", entretien.Salle.Name);
         }
     }
