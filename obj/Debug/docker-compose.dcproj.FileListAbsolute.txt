@@ -1,1 +1,0 @@
-c:\users\dboussalem\source\repos\SoatDDD\obj\Debug\docker-compose.dcproj.CoreCompileInputs.cache
