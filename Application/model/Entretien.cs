@@ -27,8 +27,10 @@ namespace Application.model
 
         private ConsultantRecruteur Match(IEnumerable<ConsultantRecruteur> consultantRecruteurs)
         {
-            return consultantRecruteurs.FirstOrDefault(consultantRecruteur => consultantRecruteur.IsAvailableAt(Creneau)
-                                         && consultantRecruteur.CanInterview(Candidat.Profile));
+            var availableRecruteurs = consultantRecruteurs.Where(consultantRecruteur => consultantRecruteur.IsAvailableAt(Creneau));
+            Profile profile = new Profile(Candidat.Profile.Experience);
+            var Recruteur = profile.RecruteurMatchingProfile(availableRecruteurs);
+            return Recruteur;       
         }
 
         public static explicit operator EntretienDto(Entretien entretien)
