@@ -38,7 +38,7 @@ namespace Application.model
                 Creneau = (CreneauDto) entretien.Creneau,
                 Candidat = (CandidatDto) entretien.Candidat,
                 ConsultantRecruteur = (ConsultantRecruteurDto) entretien.ConsultantRecruteur,
-                Status = entretien.Status,
+                Status = (EntretienStatusDto) entretien.Status,
             };
         }
     }

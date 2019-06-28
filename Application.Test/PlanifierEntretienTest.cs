@@ -1,4 +1,3 @@
-using Application.model;
 using System;
 using Application.Dtos;
 using Xunit;
@@ -69,7 +68,7 @@ namespace Application.Test
                     Creneau = creneau,
                     Candidat = candidat,
                     ConsultantRecruteur = consultantRecruteurs[1],
-                    Status = EntretienStatus.Scheduled,
+                    Status = EntretienStatusDto.Scheduled,
                 },
             };
 
