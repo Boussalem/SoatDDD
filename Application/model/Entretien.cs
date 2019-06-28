@@ -1,18 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Application.Dtos;
 
 namespace Application.model
 {
     public class Entretien
     {
-        public Creneau Creneau { get; set; }
-        public EntretienStatus Status { get; set; }
-        public Candidat Candidat { get; set; }
-        public ConsultantRecruteur ConsultantRecruteur { get; set; }
+        internal Creneau Creneau { get; set; }
+        internal EntretienStatus Status { get; set; }
+        internal Candidat Candidat { get; set; }
+        internal ConsultantRecruteur ConsultantRecruteur { get; set; }
 
-        public Entretien Schedule(IEnumerable<ConsultantRecruteur> availableRecruteurs)
+        public Entretien(CreneauDto creneau, CandidatDto candidat)
         {
-            ConsultantRecruteur = Match(availableRecruteurs);
+            Candidat = new Candidat(candidat);
+            Creneau = new Creneau(creneau);
+        }
+
+        public Entretien Schedule(IEnumerable<ConsultantRecruteurDto> availableRecruteurs)
+        {
+            ConsultantRecruteur = Match(availableRecruteurs.Select(r => new ConsultantRecruteur(r)));
             Status = ConsultantRecruteur != null ? EntretienStatus.Scheduled : EntretienStatus.NoScheduleAvailable;
 
             return this;
@@ -23,8 +30,20 @@ namespace Application.model
             return consultantRecruteurs.FirstOrDefault(consultantRecruteur => consultantRecruteur.IsAvailableAt(Creneau)
                                          && consultantRecruteur.CanInterview(Candidat.Profile));
         }
+
+        public static explicit operator EntretienDto(Entretien entretien)
+        {
+            return new EntretienDto
+            {
+                Creneau = (CreneauDto) entretien.Creneau,
+                Candidat = (CandidatDto) entretien.Candidat,
+                ConsultantRecruteur = (ConsultantRecruteurDto) entretien.ConsultantRecruteur,
+                Status = entretien.Status,
+            };
+        }
     }
 
+    // TODO dto
     public enum EntretienStatus
     {
         ToBeScheduled = 0,

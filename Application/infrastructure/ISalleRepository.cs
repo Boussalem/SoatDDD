@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Application.Dtos;
 using Application.model;
-using Application.use_case.entretien;
 
 namespace Application.infrastructure
 {
     public interface ISalleRepository
     {
-        IEnumerable<Salle> Get(DateTimeOffset date);
+        IEnumerable<SalleDto> Get(DateTimeOffset date);
     }
 }

@@ -1,10 +1,12 @@
 using Application.model;
 using System;
 using System.Collections.Generic;
+using Application.Dtos;
 using Xunit;
 using Application.infrastructure;
 using Moq;
 using Application.use_case.entretien;
+using FluentAssertions;
 
 namespace Application.Test
 {
@@ -18,26 +20,26 @@ namespace Application.Test
             //ARRANGE 
             Mock<IConsultantRecruteurRepository> consultantRecruteurRepository = new Mock<IConsultantRecruteurRepository>();
             var salleRepository = new Mock<ISalleRepository>();
-            List<ConsultantRecruteur> consultantRecruteursAttendus = new List<ConsultantRecruteur>
+            var consultantRecruteurs = new []
             {
-                new ConsultantRecruteur
+                new ConsultantRecruteurDto
                 {
                     Name = "Alain",
-                    Profile = new Profile(2),
+                    Profile = new ProfileDto { Experience = 2 },
                 },
-                new ConsultantRecruteur
+                new ConsultantRecruteurDto
                 {
                     Name = "Remi",
-                    Profile = new Profile(7),
+                    Profile = new ProfileDto { Experience = 7 },
                 }
             };
 
             consultantRecruteurRepository.Setup(x => x.GetAvailableConsultantRecruteurForDate(It.IsAny<DateTimeOffset>()))
-                .Returns(consultantRecruteursAttendus);
+                .Returns(consultantRecruteurs);
 
             var salles = new []
             {
-                new Salle
+                new SalleDto
                 {
                     Name = "salle",
                 }, 
@@ -45,25 +47,35 @@ namespace Application.Test
             
             salleRepository.Setup(r => r.Get(It.IsAny<DateTimeOffset>()))
                 .Returns(salles);
-            var candidat = new Candidat
+            var candidat = new CandidatDto
             {
                 Name = "Max",
-                Profile = new Profile(2),
+                Profile = new ProfileDto { Experience = 2 },
+            };
+            var creneau = new CreneauDto
+            {
+                StartDate = now,
+                EndDate = now.AddHours(1),
             };
 
             //ACT 
             var planifierEntretien = new PlanifierEntretien(consultantRecruteurRepository.Object, salleRepository.Object);
-            var entretienDto = planifierEntretien.PlanifierUnEntretien(DateTimeOffset.Now, candidat);
-            var creneau = new Creneau(now, TimeSpan.FromHours(1));
-         
-            
-            //ASSERT
+            var result = planifierEntretien.PlanifierUnEntretien(creneau, candidat);
 
-            Assert.Equal(creneau, entretienDto.Entretien.Creneau);
-            Assert.Equal(EntretienStatus.Scheduled, entretienDto.Entretien.Status);
-            Assert.Equal("Remi", entretienDto.Entretien.ConsultantRecruteur.Name);
-            Assert.Equal(7, entretienDto.Entretien.ConsultantRecruteur.Profile.Experience);
-            Assert.Equal("salle", entretienDto.Salle.Salle.Name);
+            var expected = new RendezVousDto
+            {
+                Salle = salles[0],
+                Entretien = new EntretienDto
+                {
+                    Creneau = creneau,
+                    Candidat = candidat,
+                    ConsultantRecruteur = consultantRecruteurs[1],
+                    Status = EntretienStatus.Scheduled,
+                },
+            };
+
+            //ASSERT
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

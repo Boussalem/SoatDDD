@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Application.Dtos;
 
 namespace Application.model
 {
     public class SalleAggregate
     {
-        public Salle Salle { get; set; }
+        internal Salle Salle { get; set; }
 
-        public SalleAggregate Match(IEnumerable<Salle> salles, Creneau creneau)
+        public SalleAggregate Match(IEnumerable<SalleDto> salles, CreneauDto creneau)
         {
-            Salle = salles.FirstOrDefault(salle => salle.IsAvailableAt(creneau));
+            var c = new Creneau(creneau);
+            Salle = salles.Select(s => new Salle(s))
+                .FirstOrDefault(salle => salle.IsAvailableAt(c));
 
             return this;
         }

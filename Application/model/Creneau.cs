@@ -1,15 +1,16 @@
 ﻿using System;
+using Application.Dtos;
 
 namespace Application.model
 {
-    public class Creneau
+    internal class Creneau
     {
         private Creneau() {}
 
-        public Creneau(DateTimeOffset startDate, TimeSpan duration)
+        public Creneau(CreneauDto dto)
         {
-            StartDate = startDate;
-            EndDate = startDate + duration;
+            StartDate = dto.StartDate;
+            EndDate = dto.EndDate;
         }
 
         public DateTimeOffset StartDate { get; }
@@ -23,6 +24,15 @@ namespace Application.model
                    EndDate.TimeOfDay.Minutes.Equals(creneau.EndDate.TimeOfDay.Minutes)
                    && StartDate.Day.Equals(creneau.StartDate.Day) &&
                    EndDate.Day.Equals(creneau.EndDate.Day);
+        }
+
+        public static explicit operator CreneauDto(Creneau creneau)
+        {
+            return new CreneauDto
+            {
+                StartDate = creneau.StartDate,
+                EndDate = creneau.EndDate,
+            };
         }
     }
 }
