@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Application.model
+﻿namespace Application.model
 {
-    public class Candidat
+    public class Candidat : Entity
     {
         public string Name { get; set; }
-        public int AnneExperience { get; set; }
+        public Profile Profile { get; set; }
     }
 }
